@@ -1,0 +1,26 @@
+#Q: Quel type de ressource kubernetes doit-il créer ?
+#R: Une ressource (kind) de type "Deployment" qui a pour nom "nginx-deployment" doit être créée en utilisant l'API Kubernetes "apps/v1"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+#Q: Quelles specifications cette ressource doit-elle avoir ?
+#R: Cette ressource doit gérer 3 pods dont le label "app" doit matcher avec "reverse-proxy"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reverse-proxy
+#Q: Que doit contenir les pods gérés par cette ressource Deployment ? 
+#R: Les pods sont créés avec un label qui a pour clé "app" et pour valeur "reverse-proxy" afin que la ressource Deployment puisse les retrouver avec son selector matchLabels déclarer ci-dessus
+# Les pods doivent contenir 1 container nommé "nginx" qui utilise l'image du dockerHub "nginx" dans sa version "1.14.2"
+  template:
+    metadata:
+      labels:
+        app: reverse-proxy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27.1-alpine
+        ports:
+        - containerPort: 80

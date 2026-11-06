@@ -1,0 +1,18 @@
+quetsion 4 :
+    //
+    kubectl get events -
+    n front-- sort - by =.metadata.creationTimestamp
+                             kubectl get pods -
+                         n front
+
+                             question 7 : Les pointillés violets délimitent les pods gérés par le Deployment nginx.question 8 :.Les pointillés rouges représentent le namespace front : il regroupe les ressources déployées dans ce namespace
+
+                                                                                                                                                                                        commande
+
+                                                                                                                                                                                            kubectl port -
+                         forward - n front svc / nginx 8080 : 8383
+
+                                       kubectl create namespace front
+
+                                           kubectl apply -
+                         n front - f TP / front / nginx - deployment.yml kubectl apply - n front - f TP / front / nginx - service.yml
