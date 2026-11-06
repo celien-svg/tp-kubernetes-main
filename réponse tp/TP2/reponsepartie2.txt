@@ -1,0 +1,47 @@
+Réponses - Partie 2
+
+1. Les ressources sont déployées dans les namespaces attendus : MySQL dans `database`, WordPress dans `middle` et NGINX dans `front`. Pour vérifier le namespace d'une ressource, on peut afficher les ressources de chaque namespace :
+
+```powershell
+kubectl get all,configmaps,secrets,pvc -n database
+kubectl get all,configmaps,secrets,pvc -n middle
+kubectl get all,configmaps,secrets,pvc -n front
+```
+
+On peut aussi ajouter l'option `-A` pour lister les ressources de tous les namespaces :
+
+```powershell
+kubectl get pods,services,deployments,statefulsets,configmaps,secrets,pvc -A
+```
+
+2. Les ressources Kubernetes sont isolées par namespace. MySQL et son Service fonctionnent dans `database`, mais WordPress s'exécute dans `middle`. WordPress ne peut pas référencer directement un ConfigMap ou un Secret situé dans `database` : il faut donc créer dans `middle` les copies du ConfigMap et du Secret dont WordPress a besoin. Le Service MySQL est joignable depuis l'autre namespace grâce à son nom DNS complet, par exemple `mysql-service.database.svc.cluster.local:3306`.
+
+3. Les pods sont correctement démarrés : MySQL est `1/1 Running`, WordPress est `1/1 Running` et NGINX est `2/2 Running`. Pour vérifier leur état :
+
+```powershell
+kubectl get pods -n database
+kubectl get pods -n middle
+kubectl get pods -n front
+```
+
+La colonne `READY` doit indiquer que tous les conteneurs sont prêts, et `STATUS` doit afficher `Running`.
+
+4. Pour consulter les événements d'un namespace, triés par date :
+
+```powershell
+kubectl get events -n <namespace> --sort-by=.metadata.creationTimestamp
+```
+
+Pour examiner les détails et événements associés à un pod :
+
+```powershell
+kubectl describe pod <nom-du-pod> -n <namespace>
+```
+
+Pour afficher les logs du conteneur :
+
+```powershell
+kubectl logs <nom-du-pod> -n <namespace>
+```
+
+Si le pod contient plusieurs conteneurs on précise le conteneur avec `-c <nom-du-conteneur>`.

@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
+  namespace: front
 #Q: Quelles specifications cette ressource doit-elle avoir ?
 #R: Cette ressource doit gérer 3 pods dont le label "app" doit matcher avec "reverse-proxy"
 spec:
@@ -24,3 +25,12 @@ spec:
         image: nginx:1.27.1-alpine
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
+          readOnly: true
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
