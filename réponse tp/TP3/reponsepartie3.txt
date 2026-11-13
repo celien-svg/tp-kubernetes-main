@@ -1,0 +1,17 @@
+1 ) les commandes
+
+minikube start --driver=docker
+kubectl apply -f TP\cronjob\cronjob.yml
+kubectl get cronjob date
+kubectl get jobs
+kubectl logs job/date-29909390
+
+4) Le HPA surveille l’utilisation moyenne du CPU des pods de mon-application. Si elle dépasse 50 % du CPU demandé, il augmente le nombre de pods,
+ jusqu’au maximum défini, afin de répartir la charge. Lorsque la charge diminue, il peut réduire le nombre de pods, sans descendre sous le minimum configuré
+et si la charge est trop importante alors va diminué le tout
+
+6) 
+kubectl get hpa
+
+9)
+l'hpa fonctionne correctement sans problèmes
