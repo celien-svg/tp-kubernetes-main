@@ -107,7 +107,7 @@ Mettre à jour une application est une opération courante, mais elle ne doit ja
 Parfois, on a besoin de déboguer un pod en production. L'image de base de notre application est minimale et n'a pas d'outils comme `curl` ou `ping`. Heureusement, Kubernetes a une solution propre.
 
 1.  **Le problème :** Essayez de vous connecter à l'un de vos pods avec `kubectl exec` et de lancer la commande `curl localhost:8080`. Cette commande échouera car l'utilitaire `curl` n'est pas inclus dans l'image de l'application.
-
+    
 2.  **La solution `kubectl debug` :**
     - [ ] Ciblez un de vos pods en cours d'exécution et lancez un "conteneur de débogage" à côté de lui. Ce conteneur partagera le réseau de votre pod applicatif.
         > `kubectl debug -it <nom-de-votre-pod> -n prod-app --image=busybox --target=hello-kubernetes`
